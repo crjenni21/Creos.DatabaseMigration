@@ -5,6 +5,26 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+	<PropertyGroup>
+		<PackageId>Creos.DatabaseMigration</PackageId>
+		<Title>Creos.KafkaHelper</Title>
+		<Version>1.0.1</Version>
+
+		<AssemblyVersion>1.0.1</AssemblyVersion>
+		<FileVersion>1.0.1</FileVersion>
+		<Authors>Christopher Jennings</Authors>
+
+		<Description>Eases Database First Migrations with Postgres and SQL Server</Description>
+
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+
+		<RepositoryUrl>https://github.com/crjenni21/Creos.DatabaseMigration</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/crjenni21/Creos.DatabaseMigration</PackageProjectUrl>
+	</PropertyGroup>
+
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
 		<PackageReference Include="Npgsql" Version="8.0.8" />
@@ -17,5 +37,10 @@
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
 	</ItemGroup>
 
+
+	<ItemGroup>
+		<None Include="..\README.md" Pack="true" PackagePath="" />
+		<None Include="..\LICENSE" Pack="true" PackagePath="" />
+	</ItemGroup>
 
 </Project>
