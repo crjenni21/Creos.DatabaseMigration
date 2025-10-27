@@ -1,0 +1,5 @@
+
+
+create table if not exists test_creos_9 (some_column1 varchar, some_column2 varchar);
+create table if not exists test_creos_10 (some_column1 varchar, some_column2 varchar);
+

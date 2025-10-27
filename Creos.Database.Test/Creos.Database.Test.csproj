@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Pre\1.sql" />
+    <None Remove="Pre\3.psql" />
+    <None Remove="Pre\5.SomethingRerunnable.psql" />
+    <None Remove="Pre\6-SomethingRerunnable.psql" />
+    <None Remove="Pre\SomethingRerunnable.psql" />
+    <None Remove="VersionScripts\1\1.001.psql" />
+    <None Remove="VersionScripts\1\1.001.sql" />
+    <None Remove="VersionScripts\1\1.002.psql" />
+    <None Remove="VersionScripts\1\1.003.psql" />
+    <None Remove="VersionScripts\1\1.004.psql" />
+    <None Remove="VersionScripts\2\2.001.psql" />
+    <None Remove="VersionScripts\2\2.002.psql" />
+    <None Remove="VersionScripts\base.psql" />
+    <None Remove="VersionScripts\TestFolder\3.0001.psql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Pre\1.sql" />
+    <EmbeddedResource Include="Pre\3.psql" />
+    <EmbeddedResource Include="Pre\5.SomethingRerunnable.psql" />
+    <EmbeddedResource Include="Pre\6-SomethingRerunnable.psql" />
+    <EmbeddedResource Include="Pre\SomethingRerunnable.psql" />
+    <EmbeddedResource Include="VersionScripts\1\1.001.sql" />
+    <EmbeddedResource Include="VersionScripts\1\1.003.psql" />
+    <EmbeddedResource Include="VersionScripts\1\1.001.psql" />
+    <EmbeddedResource Include="VersionScripts\1\1.002.psql" />
+    <EmbeddedResource Include="VersionScripts\1\1.004.psql" />
+    <EmbeddedResource Include="VersionScripts\2\2.001.psql" />
+    <EmbeddedResource Include="VersionScripts\2\2.002.psql" />
+    <EmbeddedResource Include="VersionScripts\base.psql" />
+    <EmbeddedResource Include="Pre\1.psql" />
+    <EmbeddedResource Include="Pre\2.psql" />
+    <EmbeddedResource Include="VersionScripts\TestFolder\3.0001.psql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Post\" />
+  </ItemGroup>
+
+</Project>
