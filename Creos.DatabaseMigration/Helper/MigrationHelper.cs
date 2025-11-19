@@ -74,7 +74,7 @@ namespace Creos.DatabaseMigration.Helper
 		                        where t.name = N'{migrationModel.VersionTable}')
 	                        create table {migrationModel.SchemaName}.{migrationModel.VersionTable} (
                                 dbversionid numeric(8,5) not null,
-                                createutcdatetime datetime not null,
+                                createutcdatetime datetime2(3) not null,
                                 constraint PK__{migrationModel.VersionTable} primary key (dbversionid)
                             );";
 
