@@ -75,7 +75,7 @@ namespace Creos.DatabaseMigration
                     {
                         if (!string.IsNullOrWhiteSpace(baseSql))
                         {
-                            await _sqlHelper.RunNonQuery(databaseMigrationModel, connectionStringInfo, baseSql, 30, cancellationToken).ConfigureAwait(false);
+                            await _sqlHelper.RunNonQueryAsync(databaseMigrationModel, connectionStringInfo, baseSql, 30, cancellationToken).ConfigureAwait(false);
                             await _migrationHelper.SaveVersionAsExecutedAsync(databaseMigrationModel, connectionStringInfo, (decimal)0.0, cancellationToken).ConfigureAwait(false);
                         }
                     }
@@ -149,7 +149,13 @@ namespace Creos.DatabaseMigration
                 {
                     try
                     {
-                        await _sqlHelper.RunNonQuery(databaseMigrationModel, connectionStringInfo, scriptToExecute, databaseMigrationModel.Timeout, cancellationToken).ConfigureAwait(false);
+                        if (scriptToExecute != null)
+                        {
+                            if (scriptToExecute.Contains("EXECUTE_SCRIPT_NO_TRANSACTION", StringComparison.OrdinalIgnoreCase))
+                                await _sqlHelper.RunNonQueryNoTransactionAsync(databaseMigrationModel, connectionStringInfo, scriptToExecute, databaseMigrationModel.Timeout, cancellationToken).ConfigureAwait(false);
+                            else
+                                await _sqlHelper.RunNonQueryAsync(databaseMigrationModel, connectionStringInfo, scriptToExecute, databaseMigrationModel.Timeout, cancellationToken).ConfigureAwait(false);
+                        }
                     }
                     catch (Exception ex)
                     {

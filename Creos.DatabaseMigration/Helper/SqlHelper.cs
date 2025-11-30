@@ -55,7 +55,7 @@ namespace Creos.DatabaseMigration.Helper
             }
         }
 
-        public async Task RunNonQuery(DatabaseMigrationModel migrationModel, ConnectionStringInfo connectionStringInfo, string sql, int timeout, CancellationToken cancellationToken)
+        public async Task RunNonQueryAsync(DatabaseMigrationModel migrationModel, ConnectionStringInfo connectionStringInfo, string sql, int timeout, CancellationToken cancellationToken)
         {
             try
             {
@@ -96,6 +96,52 @@ namespace Creos.DatabaseMigration.Helper
                     catch
                     {
                         await transaction.RollbackAsync(cancellationToken).ConfigureAwait(false);
+                        throw;
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Creos.DatabaseMigration | {ConnectionStringName} {sql}", connectionStringInfo.ConnectionStringName, sql);
+                throw;
+            }
+        }
+
+        public async Task RunNonQueryNoTransactionAsync(DatabaseMigrationModel migrationModel, ConnectionStringInfo connectionStringInfo, string sql, int timeout, CancellationToken cancellationToken)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(sql)) return;
+
+                if (migrationModel.DatabaseType == Models.DatabaseType.Postgres)
+                {
+                    using var connection = new NpgsqlConnection(connectionStringInfo.CnString);
+                    using NpgsqlCommand cmd = new(sql, connection);
+                    await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+                    cmd.CommandTimeout = timeout;
+                    try
+                    {
+                        await cmd.ExecuteNonQueryAsync(cancellationToken).ConfigureAwait(false);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
+                else if (migrationModel.DatabaseType == Models.DatabaseType.SqlServer)
+                {
+                    using var connection = new SqlConnection(connectionStringInfo.CnString);
+                    using SqlCommand cmd = new(sql, connection);
+                    await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+                    cmd.CommandTimeout = timeout;
+                    try
+                    {
+                        await cmd.ExecuteNonQueryAsync(cancellationToken).ConfigureAwait(false);
+                    }
+                    catch
+                    {
                         throw;
                     }
                 }

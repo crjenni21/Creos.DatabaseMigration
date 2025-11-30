@@ -55,7 +55,7 @@ namespace Creos.DatabaseMigration.Helper
                 else if (migrationModel.DatabaseType == DatabaseType.SqlServer)
                     sql = $@"if not exists (select 1 from sys.schemas where name = N'{migrationModel.SchemaName}') begin exec('create schema [{migrationModel.SchemaName}]'); end ;";
                 
-                await _sqlHelper.RunNonQuery(migrationModel, connectionStringInfo, sql, 15, cancellationToken).ConfigureAwait(false);
+                await _sqlHelper.RunNonQueryAsync(migrationModel, connectionStringInfo, sql, 15, cancellationToken).ConfigureAwait(false);
 
 
                 if (migrationModel.DatabaseType == DatabaseType.Postgres)
@@ -79,7 +79,7 @@ namespace Creos.DatabaseMigration.Helper
                             );";
 
 
-                await _sqlHelper.RunNonQuery(migrationModel, connectionStringInfo, sql, 15, cancellationToken).ConfigureAwait(false);
+                await _sqlHelper.RunNonQueryAsync(migrationModel, connectionStringInfo, sql, 15, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -190,7 +190,7 @@ namespace Creos.DatabaseMigration.Helper
                     sql = $"insert into {migrationModel.SchemaName}.{migrationModel.VersionTable} (dbversionid, createutcdatetime) values ({version}, now() at time zone 'utc');";
                 else if (migrationModel.DatabaseType == DatabaseType.SqlServer)
                     sql = $"insert into {migrationModel.SchemaName}.{migrationModel.VersionTable} (dbversionid, createutcdatetime) values ({version}, SYSUTCDATETIME());";
-                await _sqlHelper.RunNonQuery(migrationModel, connectionStringInfo, sql, 30, cancellationToken).ConfigureAwait(false);
+                await _sqlHelper.RunNonQueryAsync(migrationModel, connectionStringInfo, sql, 30, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

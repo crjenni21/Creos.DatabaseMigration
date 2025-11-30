@@ -1,8 +1,8 @@
 # Creos.DatabaseMigration
 
 ## Project Purpose:
-This library project is intended to run postgres scripts for a database-first migration.
-This Creos.DatabaseMigration library must be included in the application that is connecting to the database.
+This library project is intended to run postgres or SQL Server scripts for a database-first migration.
+This Creos.DatabaseMigration Nuget Package must be included in the application that is connecting to the database.
 
 ## Secondary library/project containing scripts
 You have two options here - both work the same from a code perspective.  
@@ -31,7 +31,7 @@ There could be potentially three different base folders in your script project:
  
 (The folder names are case-insensitive.)
 
-All scripts must have the extension .psql.   There is no exception to this.  
+All scripts must have the extension .psql or .sql.   There is no exception to this.  
 
 
 ### "Pre" folder
@@ -101,7 +101,7 @@ This file is the only exception to the decimal naming convention for database sc
 If the base.psql file is executed, a 0.0 entry is inserted into the VersionTable. 
  
 ### Script Naming Conventions
- - The postgres script file must end in .psql
+ - The postgres/SQL Server script file must end in .psql
  
 ### Script Execution
  - Scripts will execute in the numerical order of their filename.
@@ -110,6 +110,10 @@ If the base.psql file is executed, a 0.0 entry is inserted into the VersionTable
 ### Script file properties
  - Each of the .psql files must be marked as *Embedded Resource* and *Do not copy to output directory*
  - Please remember to build your project after adding a file.  Building a project adds a record to the .csproj file.  This is often forgotten and has often resulted in many head-aches.
+
+### Per Script Rules
+ - Each individual script is, by default, run within in a Transaction.  Therefore, if any part of a script fails, the entire script will be rolled back.  
+ - EXECUTE_SCRIPT_NO_TRANSACTION - This can be placed as a comment anywhere within the script (case-insensitive).  If it exists, then that individual script will not be executed as a transaction.  
 
 ### Tips
  - Again - Don't forget to build the project after adding a new script file.
